@@ -5,8 +5,12 @@ import whisper
 import numpy as np
 import ffmpeg
 import openai
+from dotenv import load_dotenv
+import os
 
-openai.api_key = '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'
+load_dotenv()
+
+openai.api_key = os.getenv('OPEN_AI_KEY')
 
 model = whisper.load_model('small.en')
 
@@ -38,8 +42,6 @@ def new_sesh():
 
 def file_to_np(file):
     try:
-        # This launches a subprocess to decode audio while down-mixing and resampling as necessary.
-        # Requires the ffmpeg CLI and `ffmpeg-python` package to be installed.
         out, _ = (
             ffmpeg.input('pipe:', threads=0)
             .output("-", format="s16le", acodec="pcm_s16le", ac=1, ar=16000)
