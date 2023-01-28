@@ -80,20 +80,22 @@ def transcribe(session_id=None):
     content = model.transcribe(file_data)
     sesh.content += '\n' + content['text']
     db.session.commit()
+    if request.json.get('summarize', False):
+        gpt_prompt = f"Summarize this meeting transcript:\n\n{sesh.content}\n\nSummary:".strip()
 
-    gpt_prompt = f"Summarize this meeting transcript:\n\n{sesh.content}\n\nSummary:".strip()
-
-    response = openai.Completion.create(
-        engine="text-davinci-002",
-        prompt=gpt_prompt,
-        max_tokens=256,
-        temperature=0.5,
-        top_p=1.0,
-        frequency_penalty=0.0,
-        presence_penalty=0.0
-    )
-
-    return {'session_id': sesh.session_id, 'output': response['choices'][0]['text'].strip()}, 200
+        response = openai.Completion.create(
+            engine="text-davinci-002",
+            prompt=gpt_prompt,
+            max_tokens=256,
+            temperature=0.5,
+            top_p=1.0,
+            frequency_penalty=0.0,
+            presence_penalty=0.0
+        )
+        output = response['choices'][0]['text'].strip()
+    else:
+        output = sesh.content
+    return {'session_id': sesh.session_id, 'output': output}, 200
 
 if __name__ == '__main__':
     app.run(port=3333)
