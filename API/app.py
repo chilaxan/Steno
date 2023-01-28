@@ -8,7 +8,7 @@ import openai
 
 openai.api_key = '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'
 
-model = whisper.load_model('base.en')
+model = whisper.load_model('small.en')
 
 db = SQLAlchemy()
 
