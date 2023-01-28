@@ -4,7 +4,7 @@
 * return the description from that clip + previous (if session id is provided)
 
 # Discord Bot
-* sit in audio cannel and listen
+* sit in audio channel and listen
 * every so often, upload clip to API, along with session id
 * post/edit current meeting notes
 
