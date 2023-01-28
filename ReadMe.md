@@ -1,13 +1,13 @@
-# app
-* use xcode
-* write in swift
+# API/Webapp
+* recieve an audio clip
+* (optional session id)
+* return the description from that clip + previous (if session id is provided)
 
-# server
-* write in python
-* flask
-* use sql for backing database
-* hash passwords and only store hashes
+# Discord Bot
+* sit in audio cannel and listen
+* every so often, upload clip to API, along with session id
+* post/edit current meeting notes
 
-# Neural Net
-* Train model to detect and analyse outputs and identify inputs
-* communicate these inputs with server and create outcome based off of that
+# Webpage frontend
+* post an audio clip
+* get the description
