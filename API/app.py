@@ -75,7 +75,7 @@ def transcribe(session_id=None):
         sesh = new_sesh()
     file = request.files.get('clip')
     if file is None or file.filename == '':
-        return {'error': 'no file provided', 'output': sesh.content}, 400
+        return {'error': 'no file provided', 'output': sesh.content, 'session_id': sesh.session_id}, 400
     file_data = file_to_np(file)
     content = model.transcribe(file_data)
     sesh.content += '\n' + content['text']
