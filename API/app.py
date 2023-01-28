@@ -12,7 +12,7 @@ load_dotenv()
 
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
-model = whisper.load_model('small.en')
+model = whisper.load_model('base.en')
 
 db = SQLAlchemy()
 
