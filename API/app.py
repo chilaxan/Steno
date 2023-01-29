@@ -84,7 +84,7 @@ def transcribe(session_id=None):
         gpt_prompt = f"Summarize this meeting transcript:\n\n{sesh.content}\n\nSummary:".strip()
 
         response = openai.Completion.create(
-            engine="text-davinci-002",
+            engine="text-davinci-003",
             prompt=gpt_prompt,
             max_tokens=256,
             temperature=0.5,
