@@ -25,7 +25,7 @@ def post(vc, session, update, summarize):
         sink.file.cleanup()
         sink.format_audio(sink.file)
         resp = requests.post(
-            f'https://steno.chilaxan.tech/api/transcribe/{session}',
+            f'http://localhost:3333/transcribe/{session}',
             data={'summarize': summarize},
             files={'clip': sink.file.file}
         )
@@ -55,7 +55,7 @@ async def start(ctx, summarize: bool, title: str="Summary"):
     em.add_field(name = '', value = '<None>')
     update = await ctx.send(embed=em)
 
-    session = requests.get('https://steno.chilaxan.tech/api/session').json()['session_id']
+    session = requests.get('http://localhost:3333/session').json()['session_id']
 
     vc.start_recording(
         SumWaveSink(filters={'time':10}),
@@ -68,7 +68,7 @@ async def start(ctx, summarize: bool, title: str="Summary"):
 async def stop(ctx):
     global halt
     halt = True
-    requests.delete(f'https://steno.chilaxan.tech/api/delete/{session}')
+    requests.delete(f'http://localhost:3333/delete/{session}')
     await ctx.respond("Stopped Transcribing")
 
 load_dotenv()
