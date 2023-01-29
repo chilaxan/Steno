@@ -98,4 +98,4 @@ def transcribe(session_id=None):
     return {'session_id': sesh.session_id, 'output': output}, 200
 
 if __name__ == '__main__':
-    app.run(port=3333)
+    app.run(port=3333, debug=True)
