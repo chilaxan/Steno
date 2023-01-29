@@ -41,7 +41,7 @@ def post(vc, session, update, summarize):
             )
     return inner
 
-@bot.command("Start Transcribing")
+@bot.command(description="Start Transcribing")
 async def start(ctx, summarize: bool, title: str="Summary"):
     global halt, session
     voice = ctx.author.voice
