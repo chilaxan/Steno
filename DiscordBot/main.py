@@ -74,7 +74,7 @@ async def stop(ctx):
     global halt
     halt = True
     requests.delete(f'http://localhost:3333/delete/{session}')
-    ctx.guild.voice_client.disconnect()
+    await ctx.guild.voice_client.disconnect()
     await ctx.respond("Stopped Transcribing")
 
 load_dotenv()
