@@ -34,7 +34,7 @@ def post(vc, session, update, summarize, title):
         discord.Color.green())
         text = resp.json()['output']            
         em.add_field(name = 'Content', value = text)
-        if len(text) > 900:
+        if len(text) > 700:
             update = await channel.send(embed=em)
         else:
             await update.edit(embed=em)
