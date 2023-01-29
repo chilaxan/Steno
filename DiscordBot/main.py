@@ -20,9 +20,9 @@ class SumWaveSink(WaveSink):
             self.file = AudioData(io.BytesIO())
         self.file.write(data)
 
-def post(vc, session, update, summarize, title):
+def post(vc, session, update, summarize, title, page=0):
     async def inner(sink, channel, *args):
-        nonlocal update
+        nonlocal update, page
         sink.file.cleanup()
         sink.format_audio(sink.file)
         resp = requests.post(
@@ -32,16 +32,17 @@ def post(vc, session, update, summarize, title):
         )
         em = discord.Embed(title = title, color = 
         discord.Color.green())
-        text = resp.json()['output']            
+        text = resp.json()['output'][700 * page: 700 * (page + 1)]
         em.add_field(name = 'Content', value = text)
         if len(text) > 700:
+            page += 1
             update = await channel.send(embed=em)
         else:
             await update.edit(embed=em)
         if not halt:
             vc.start_recording(
                 SumWaveSink(filters={'time':15}),
-                post(vc, session, update, summarize, title),
+                post(vc, session, update, summarize, title, page),
                 channel
             )
     return inner
