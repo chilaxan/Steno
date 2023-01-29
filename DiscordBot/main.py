@@ -35,7 +35,7 @@ def post(vc, session, update, summarize):
         await update.edit(embed=em)
         if not halt:
             vc.start_recording(
-                SumWaveSink(filters={'time':10}),
+                SumWaveSink(filters={'time':15}),
                 post(vc, session, update, summarize),
                 channel
             )
