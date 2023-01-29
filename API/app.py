@@ -80,7 +80,6 @@ def transcribe(session_id=None):
     content = model.transcribe(file_data)
     sesh.content += '\n' + content['text']
     db.session.commit()
-    print(request.form)
     if request.form.get('summarize', 'False').lower() == 'true':
         gpt_prompt = f"Summarize this meeting transcript:\n\n{sesh.content}\n\nSummary:".strip()
 
