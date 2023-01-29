@@ -41,13 +41,13 @@ def post(vc, session, update, summarize):
             )
     return inner
 
-@bot.command()
+@bot.command("Start Transcribing")
 async def start(ctx, summarize: bool, title: str="Summary"):
     global halt, session
     voice = ctx.author.voice
 
     if not voice:
-        await ctx.respond("You aren't in a voice channel!")
+        return await ctx.respond("You aren't in a voice channel!")
     vc = await voice.channel.connect()
     halt = False
 
@@ -64,7 +64,7 @@ async def start(ctx, summarize: bool, title: str="Summary"):
     )
     await ctx.respond('Started Transcribing')
 
-@bot.command()
+@bot.command(description="Stop Current Transcription Session")
 async def stop(ctx):
     global halt
     halt = True
