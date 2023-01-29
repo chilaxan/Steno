@@ -20,8 +20,9 @@ class SumWaveSink(WaveSink):
             self.file = AudioData(io.BytesIO())
         self.file.write(data)
 
-def post(vc, session, update, summarize):
+def post(vc, session, update, summarize, title):
     async def inner(sink, channel, *args):
+        nonlocal update
         sink.file.cleanup()
         sink.format_audio(sink.file)
         resp = requests.post(
@@ -29,7 +30,7 @@ def post(vc, session, update, summarize):
             data={'summarize': summarize},
             files={'clip': sink.file.file}
         )
-        em = discord.Embed(title = f"Summary", color = 
+        em = discord.Embed(title = title, color = 
         discord.Color.green())
         text = resp.json()['output']            
         em.add_field(name = 'Content', value = text)
@@ -40,7 +41,7 @@ def post(vc, session, update, summarize):
         if not halt:
             vc.start_recording(
                 SumWaveSink(filters={'time':15}),
-                post(vc, session, update, summarize),
+                post(vc, session, update, summarize, title),
                 channel
             )
     return inner
@@ -63,7 +64,7 @@ async def start(ctx, summarize: bool, title: str="Summary"):
 
     vc.start_recording(
         SumWaveSink(filters={'time':10}),
-        post(vc, session, update, summarize),
+        post(vc, session, update, summarize, title),
         ctx.channel
     )
     await ctx.respond('Started Transcribing')
