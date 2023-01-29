@@ -32,7 +32,7 @@ def post(vc, session, update, summarize, title, page=0):
         )
         em = discord.Embed(title = title, color = 
         discord.Color.green())
-        text = resp.json()['output'][700 * page: 700 * (page + 1)]
+        text = resp.json()['output'][701 * page: 701 * (page + 1)]
         em.add_field(name = 'Content', value = text)
         if len(text) > 700:
             page += 1
