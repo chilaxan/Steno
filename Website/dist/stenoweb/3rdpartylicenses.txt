@@ -66,6 +66,9 @@ MIT
 @angular/router
 MIT
 
+ngx-file-drag-drop
+MIT
+
 rxjs
 Apache-2.0
                                Apache License
