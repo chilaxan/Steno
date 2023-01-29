@@ -31,8 +31,12 @@ def post(vc, session, update, summarize):
         )
         em = discord.Embed(title = f"Summary", color = 
         discord.Color.green())
-        em.add_field(name = 'Content', value = resp.json()['output'])
-        await update.edit(embed=em)
+        text = resp.json()['output']            
+        em.add_field(name = 'Content', value = text)
+        if len(text) > 900:
+            update = await channel.send(embed=em)
+        else:
+            await update.edit(embed=em)
         if not halt:
             vc.start_recording(
                 SumWaveSink(filters={'time':15}),
